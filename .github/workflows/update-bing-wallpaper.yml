@@ -26,8 +26,8 @@ jobs:
         run: npm install
 
       # 4. 运行获取 Bing 壁纸的脚本
-      - name: Run fetch-bing-wallpaper.js
-        run: node fetch-bing-wallpaper.js
+      - name: Run bing.js
+        run: node bing.js
 
       # 5. 提交更改到仓库
       - name: Commit changes
