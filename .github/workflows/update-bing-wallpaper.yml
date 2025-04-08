@@ -21,15 +21,11 @@ jobs:
         with:
           node-version: '16'
 
-      # 3. 安装依赖（如果有）
-      - name: Install dependencies
-        run: npm install
-
-      # 4. 运行获取 Bing 壁纸的脚本
+      # 3. 运行获取 Bing 壁纸的脚本
       - name: Run bing.js
         run: node bing.js
 
-      # 5. 提交更改到仓库
+      # 4. 提交更改到仓库
       - name: Commit changes
         run: |
           git config user.name "GitHub Actions"
