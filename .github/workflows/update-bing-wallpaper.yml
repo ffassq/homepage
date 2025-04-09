@@ -26,7 +26,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add images.json
+          git add images.js
           git commit -m "Updated Bing wallpaper for $(date +'%Y-%m-%d')"
           # 使用安全的方式推送
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
