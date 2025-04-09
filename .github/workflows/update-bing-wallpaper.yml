@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # 升级到v4
+        uses: actions/checkout@v3
         with:
-          persist-credentials: false
+          persist-credentials: false # 这里应该保持为false，用显式token更安全
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4 # 升级到v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '18' # 建议升级到Node 18
+          node-version: '16'
 
       - name: Run bing.js
-        run: bing.js # 检查实际脚本路径
+        run: node bing.js
 
       - name: Commit changes
         run: |
@@ -28,7 +28,6 @@ jobs:
           git config user.email "actions@github.com"
           git add images.json
           git commit -m "Updated Bing wallpaper for $(date +'%Y-%m-%d')"
-          git remote set-url origin https://github.com/${{ github.repository }}
-          git push origin HEAD:main # 确认分支名称
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 隐式传递token
+          # 使用安全的方式推送
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push origin HEAD:main
