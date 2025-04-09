@@ -2,34 +2,33 @@ name: Update Bing Wallpaper
 
 on:
   schedule:
-    # 每天 UTC 时间 00:00 触发
     - cron: '0 0 * * *'
-  workflow_dispatch: # 手动触发
+  workflow_dispatch:
 
 jobs:
   update-wallpaper:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. 检出代码
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # 2. 安装 Node.js 环境
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4 # 升级到v4
         with:
-          node-version: '16'
+          persist-credentials: false
 
-      # 3. 运行获取 Bing 壁纸的脚本
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # 升级到v4
+        with:
+          node-version: '18' # 建议升级到Node 18
+
       - name: Run bing.js
-        run: node bing.js
+        run: node ./path/to/bing.js # 检查实际脚本路径
 
-      # 4. 提交更改到仓库
       - name: Commit changes
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add images.json
           git commit -m "Updated Bing wallpaper for $(date +'%Y-%m-%d')"
-          git push
+          git remote set-url origin https://github.com/${{ github.repository }}
+          git push origin HEAD:main # 确认分支名称
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 隐式传递token
