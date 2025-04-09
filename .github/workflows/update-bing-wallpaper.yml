@@ -20,7 +20,7 @@ jobs:
           node-version: '18' # 建议升级到Node 18
 
       - name: Run bing.js
-        run: node ./path/to/bing.js # 检查实际脚本路径
+        run: bing.js # 检查实际脚本路径
 
       - name: Commit changes
         run: |
